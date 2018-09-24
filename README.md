@@ -1,1 +1,1 @@
-# kubeadm-dind
+# Kubeadm docker-in-docker image
