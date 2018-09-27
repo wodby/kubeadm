@@ -32,9 +32,8 @@ shell:
 run:
 	docker run --rm --privileged --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG) $(CMD)
 
-# !important keep @ at the beginning.
 start:
-	@docker run -d  --privileged --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG)
+	docker run -d  --privileged --name $(NAME) $(PORTS) $(VOLUMES) $(ENV) $(REPO):$(TAG)
 
 stop:
 	docker stop $(NAME)
