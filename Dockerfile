@@ -15,4 +15,8 @@ RUN set -ex; \
     chmod +x /usr/local/bin/kubeadm; \
     mkdir -p /docker
 
-COPY daemon.json /etc/docker/
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD []

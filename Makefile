@@ -18,11 +18,10 @@ default: build
 
 build:
 	docker build -t $(REPO):$(TAG) --build-arg KUBEADM_VER=$(KUBEADM_VER) ./
-	# pre-pull images and commit.
 	$(eval cid = $(shell make start))
-	docker exec $(cid) docker pull busybox:1.26.2 mirantis/kubeadm-dind-cluster:v1.11
-	docker exec $(cid) sh -c 'echo "" > ~/.ash_history'
-	docker exec $(cid) rm -rf /docker/runtimes
+	docker exec $(cid) docker pull mirantis/kubeadm-dind-cluster:v1.11
+	docker exec $(cid) sh -c "docker save mirantis/kubeadm-dind-cluster:v1.11 > kubeadm.tar"
+	docker exec $(cid) gzip kubeadm.tar
 	docker commit $(cid) $(REPO):$(TAG)
 	make clean
 
