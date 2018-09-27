@@ -18,7 +18,6 @@ default: build
 
 build:
 	docker build -t $(REPO):$(TAG) --build-arg KUBEADM_VER=$(KUBEADM_VER) ./
-	./build.sh "$(REPO):$(TAG)" "$(KUBEADM_VER)"
 
 test:
 	echo "no tests :("
