@@ -18,12 +18,7 @@ default: build
 
 build:
 	docker build -t $(REPO):$(TAG) --build-arg KUBEADM_VER=$(KUBEADM_VER) ./
-	$(eval cid = $(shell make start))
-	docker exec $(cid) docker pull mirantis/kubeadm-dind-cluster:v1.11
-	docker exec $(cid) sh -c "docker save mirantis/kubeadm-dind-cluster:v1.11 > kubeadm.tar"
-	docker exec $(cid) gzip kubeadm.tar
-	docker commit $(cid) $(REPO):$(TAG)
-	make clean
+	./build.sh "$(REPO):$(TAG)" "$(KUBEADM_VER)"
 
 test:
 	echo "no tests :("
