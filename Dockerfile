@@ -15,8 +15,16 @@ RUN set -ex; \
     url="https://cdn.rawgit.com/kubernetes-sigs/kubeadm-dind-cluster/master/fixed/dind-cluster-v${KUBEADM_VER}.sh"; \
     wget "${url}" -O /usr/local/bin/kubeadm; \
     chmod +x /usr/local/bin/kubeadm; \
-    sed -i '/#!/a\docker load --input \/images\/kubeadm.tar' /usr/local/bin/kubeadm; \
-    sed -i '/#!/a\gunzip \/images\/kubeadm.tar.gz' /usr/local/bin/kubeadm; \
+    { \
+        echo; \
+        echo 'if [[ -f /images/kubeadm.tar.gz ]]; then'; \
+        echo '  docker load --input /images/kubeadm.tar'; \
+        echo '  gunzip /images/kubeadm.tar.gz'; \
+        echo 'fi'; \
+        echo; \
+    } | tee load-images.sh; \
+    sed -i '/#!/r load-images.sh' /usr/local/bin/kubeadm; \
+    rm load-images.sh; \
     \
     wget -q https://raw.githubusercontent.com/moby/moby/master/contrib/download-frozen-image-v2.sh; \
     sed -i 's/$(go env GOARCH)/amd64/' download-frozen-image-v2.sh; \
