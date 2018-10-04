@@ -18,8 +18,8 @@ RUN set -ex; \
     { \
         echo; \
         echo 'if [[ -f /images/kubeadm.tar.gz ]]; then'; \
-        echo '  docker load --input /images/kubeadm.tar'; \
         echo '  gunzip /images/kubeadm.tar.gz'; \
+        echo '  docker load --input /images/kubeadm.tar'; \
         echo 'fi'; \
         echo; \
     } | tee load-images.sh; \
