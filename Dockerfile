@@ -17,6 +17,10 @@ RUN set -ex; \
     chmod +x /usr/local/bin/kubeadm; \
     { \
         echo; \
+        echo 'if [[ -n "${DEBUG}" ]]; then'; \
+        echo '  set -x'; \
+        echo 'fi'; \
+        echo; \
         echo 'if [[ -f /images/kubeadm.tar.gz ]]; then'; \
         echo '  gunzip /images/kubeadm.tar.gz'; \
         echo '  docker load --input /images/kubeadm.tar'; \
